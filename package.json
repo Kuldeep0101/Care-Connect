@@ -1,0 +1,19 @@
+{
+  "name": "care-connect",
+  "version": "1.0.0",
+  "description": "CareConnect is a modern web app that helps patients seamlessly find doctors, view detailed profiles, and book appointments online—making healthcare more accessible and connected",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kuldeep0101/Care-Connect.git"
+  },
+  "author": "Kuldeep-Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kuldeep0101/Care-Connect/issues"
+  },
+  "homepage": "https://github.com/Kuldeep0101/Care-Connect#readme"
+}
