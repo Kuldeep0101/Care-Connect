@@ -39,46 +39,42 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 
 1. Clone the repository  
 
-git clone https://github.com/Kuldeep0101/Care-Connect.git
-cd Care-Connect
+- git clone https://github.com/Kuldeep0101/Care-Connect.git
+- cd Care-Connect
 
-text
+
 
 2. Install dependencies  
 
-npm install
-
-text
+- npm install
 
 3. Create a `.env` file in the root directory with the following variables:  
 
-MONGODB_URI=
-PORT=8000
+- MONGODB_URI=
+- PORT=8000
 
-text
 
 4. Start the server  
 
-npm run dev
+ - npm run dev
 
-text
+
 *(Assuming nodemon is configured for development)*
 
 ---
 
 ## Project Structure 📂
 
-/src
-/config # Database and environment setup
-/controllers # Route handlers
-/models # Mongoose schemas
-/routes # API routes
-/services # Business logic
-/middlewares # Auth, error handling, validation
-/app.js # Entry point
-.env # Environment variables (gitignored)
+- /src
+- /config # Database and environment setup
+- /controllers # Route handlers
+- /models # Mongoose schemas
+- /routes # API routes
+- /services # Business logic
+- /middlewares # Auth, error handling, validation
+- /app.js # Entry point
+- .env # Environment variables (gitignored)
 
-text
 
 ---
 
