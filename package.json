@@ -2,8 +2,9 @@
   "name": "care-connect",
   "version": "1.0.0",
   "description": "CareConnect is a modern web app that helps patients seamlessly find doctors, view detailed profiles, and book appointments online—making healthcare more accessible and connected",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/Kuldeep0101/Care-Connect/issues"
   },
-  "homepage": "https://github.com/Kuldeep0101/Care-Connect#readme"
+  "homepage": "https://github.com/Kuldeep0101/Care-Connect#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongoose": "^8.18.0"
+  }
 }
