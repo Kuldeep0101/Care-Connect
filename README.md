@@ -92,4 +92,4 @@ MIT License
 
 ## Acknowledgments 🙏
 
-Big thanks to Akshay Saini and the Namaste Dev platform for curating this exception
+Big thanks to Akshay Saini and the Namaste Dev platform for curating this exceptional project idea and guidance. 🎉
