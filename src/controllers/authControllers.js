@@ -72,4 +72,21 @@ const userLogin = async (req, res) => {
   }
 };
 
-module.exports = { userSignup, userLogin };
+const userLogout = async (req, res) => {
+  try {
+    const jwtCookie = req.cookies.jwtToken;
+    if (!jwtCookie) {
+      return res.status(404).json({
+        message: "No logged-in user found",
+      });
+    }
+
+    res.clearCookie("jwtToken");
+    return res.status(200).json({ message: "Logged out Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { userSignup, userLogin, userLogout };
