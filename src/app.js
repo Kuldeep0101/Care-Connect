@@ -1,10 +1,12 @@
 const express = require("express");
+const cookieParser = require('cookie-parser')
 const app = express();
 
 const connectToDB = require("./config/database");
 const User = require("./models/user");
 
 app.use(express.json());
+app.use(cookieParser())
 
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
@@ -18,13 +20,6 @@ connectToDB()
     console.log(`Error While Connecting to Database ${error.message} `)
   );
 
-app.post("/test", async (req, res) => {
-  try {
-    const data  = req.body;
-    const newUser =  new User(data);
-    const newInstance =await newUser.save();
-    res.json(newInstance);
-  } catch (error) {
-    res.json(`${error}`);
-  }
-});
+const authRouter = require("../routes/userAuth");
+
+app.use("/", authRouter);
