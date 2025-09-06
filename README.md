@@ -12,7 +12,8 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 - MongoDB Atlas connection using Mongoose 🗄️  
 - User model supporting both patients and doctors with role differentiation 👥  
 - Password hashing with bcrypt and secure password comparison methods 🔐  
-- Doctor-specific fields included (specialty, location, ratings, experience, timing) 📋  
+- Doctor-specific fields included (specialty, location, ratings, experience, timing) 📋 
+- Authentication endpoints: Secure register (signup) with duplicate checks, login with JWT token in cookies, and logout to clear sessions 🔑   
 - Basic groundwork laid for authentication workflows 🔧
 
 ---
