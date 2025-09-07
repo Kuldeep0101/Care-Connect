@@ -19,6 +19,9 @@ connectToDB()
     console.log(`Error While Connecting to Database ${error.message} `)
   );
 
-const authRouter = require("../routes/userAuth");
+const authRouter = require("../src/routes/authRoutes");
 
 app.use("/", authRouter);
+
+app.use((err, req, res, next) => { console.error(err.stack); // Log for debugging 
+const status = err.status || 500; res.status(status).json({ message: err.message || 'Internal Server Error' }); });

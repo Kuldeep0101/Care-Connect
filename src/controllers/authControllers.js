@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const SecretKey = process.env.SecretKey;
 
-const userSignup = async (req, res) => {
+const signupController = async (req, res) => {
   try {
     const { name, email, password, role, ...extraFields } = req.body;
 
@@ -17,7 +17,7 @@ const userSignup = async (req, res) => {
 
     const isDuplicateEmail = await User.findOne({ email });
     if (isDuplicateEmail) {
-      return res.status(500).json({
+      return res.status(409).json({
         message: "Duplicate Email-ID are not ALLOWED!!",
       });
     }
@@ -40,7 +40,7 @@ const userSignup = async (req, res) => {
   }
 };
 
-const userLogin = async (req, res) => {
+const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
     const findUser = await User.findOne({ email }).select("+password");
@@ -51,7 +51,7 @@ const userLogin = async (req, res) => {
     }
     const comparePassword = await bcrypt.compare(password, findUser.password);
     if (!comparePassword) {
-      return res.status(404).json({
+      return res.status(401).json({
         message: "Password did not match, please try again",
       });
     }
@@ -89,4 +89,4 @@ const userLogout = async (req, res) => {
   }
 };
 
-module.exports = { userSignup, userLogin, userLogout };
+module.exports = { signupController, loginController, userLogout };
