@@ -56,13 +56,14 @@ const loginController = async (req, res) => {
       });
     }
 
-    const generateJWT = await jwt.sign({ id: findUser._id }, SecretKey, {
+    const payload = { id: findUser._id.toString(), role: findUser.role };
+
+    const generateJWT = await jwt.sign(payload, SecretKey, {
       expiresIn: "2d",
     });
     res.cookie("jwtToken", generateJWT, {
       maxAge: 48 * 60 * 60 * 1000, //expire in 48 hour
     });
-
     return res.status(200).json({
       message: `${findUser.name} has logged in!!`,
     });

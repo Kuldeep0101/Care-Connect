@@ -13,8 +13,12 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 - User model supporting both patients and doctors with role differentiation 👥  
 - Password hashing with bcrypt and secure password comparison methods 🔐  
 - Doctor-specific fields included (specialty, location, ratings, experience, timing) 📋 
-- Authentication endpoints: Secure register (signup) with duplicate checks, login with JWT token in cookies, and logout to clear sessions 🔑   
+- Authentication endpoints: Secure register (signup) with duplicate checks, login with JWT token in   cookies, and logout to clear sessions 🔑   
 - Basic groundwork laid for authentication workflows 🔧
+- Doctor profile endpoints: Doctors can view and update their own profiles securely.
+- Doctor search endpoint: Patients can search doctors by specialty/location using query parameters.
+- Profile routes protected by JWT authentication, with proper role validation.
+
 
 ---
 

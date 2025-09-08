@@ -1,11 +1,11 @@
 const express = require("express");
-const cookieParser = require('cookie-parser')
+const cookieParser = require("cookie-parser");
 const app = express();
 
 const connectToDB = require("./config/database");
 
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
@@ -19,9 +19,15 @@ connectToDB()
     console.log(`Error While Connecting to Database ${error.message} `)
   );
 
-const authRouter = require("../src/routes/authRoutes");
+const authRouter = require("./routes/authRoutes");
+const doctorRoutes = require("./routes/doctorRoutes");
 
 app.use("/", authRouter);
+app.use("/", doctorRoutes);
 
-app.use((err, req, res, next) => { console.error(err.stack); // Log for debugging 
-const status = err.status || 500; res.status(status).json({ message: err.message || 'Internal Server Error' }); });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log for debugging
+  const status = err.status || 500;
+  res.status(status).json({ message: err.message || "Internal Server Error" });
+});
