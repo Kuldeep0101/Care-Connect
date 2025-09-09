@@ -21,9 +21,11 @@ connectToDB()
 
 const authRouter = require("./routes/authRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
+const appointmentRouter = require("./routes/appointmentRoutes");
 
 app.use("/", authRouter);
 app.use("/", doctorRoutes);
+app.use('/', appointmentRouter)
 
 
 app.use((err, req, res, next) => {
