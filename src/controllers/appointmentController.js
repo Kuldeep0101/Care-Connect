@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 const bookAppointment = async (req, res) => {
   try {
-    const { doctorID, date_time } = req.body;
+    const { doctorID, date_time, notes } = req.body;
     if (!doctorID || !date_time) {
       return res.status(403).json({
         message: "doctorID and date_time are required",
@@ -12,7 +12,7 @@ const bookAppointment = async (req, res) => {
     const { id, role } = req.user;
     if (role !== "patient") {
       return res.status(403).json({
-        message: "Only patients are permitted",
+        message: "Only patients are allowed to book appointments",
       });
     }
 
@@ -41,7 +41,7 @@ const bookAppointment = async (req, res) => {
       doctorID: doctorID,
       date_time: date_time,
       status: "booked",
-      notes: "Patient has high fever since 2 days, need immidiate action",
+      notes: notes,
     });
 
     const conformation = await appointment.save();
@@ -60,15 +60,13 @@ const bookAppointment = async (req, res) => {
 const getUserAppointments = async (req, res) => {
   try {
     const { id, role } = req.user;
-    if (role !== "patient") {
-      return res.status(403).json({
-        message: "Only patients can access",
-      });
-    }
-    const allAppointments = await Appointment.find({ patientID: id });
+
+    const allAppointments = await Appointment.find({
+      $or: [{ patientID: id }, { doctorID: id }],
+    });
     if (!allAppointments || allAppointments === null) {
       return res.status(404).json({
-        message: "No Appointment for logged-in user",
+        message: "No Appointment found",
       });
     }
     return res.status(200).json({
