@@ -20,9 +20,10 @@ const appointmentSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["booked", "cancelled", "rescheduled", "done"],
+    required: true,
   },
   notes: {
-    type: String
+    type: String,
   },
 });
 

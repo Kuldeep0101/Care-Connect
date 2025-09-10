@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 
 const prescriptionSchema = new mongoose.Schema({
-  appointment: {
+  appointmentId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Appointment",
+    required: true,
   },
-  doctor: {
+  doctorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
-  patient: {
+  patientId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   details: [
     {
@@ -23,5 +26,5 @@ const prescriptionSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Prescription = mongoose.model("Prescrption", prescriptionSchema);
+const Prescription = mongoose.model("Prescription", prescriptionSchema);
 module.exports = Prescription;

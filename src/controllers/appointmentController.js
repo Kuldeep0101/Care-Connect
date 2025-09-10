@@ -72,7 +72,7 @@ const bookAppointment = async (req, res) => {
   }
 };
 
-//Get Appointments
+//See all Appointments
 const getUserAppointments = async (req, res) => {
   try {
     const { id, role } = req.user;

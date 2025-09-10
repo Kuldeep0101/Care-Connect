@@ -17,7 +17,7 @@ const signupSchema = z.object({
       message: "invalid email type",
     })
     .max(40, {
-      message: "email should be 20 char long",
+      message: "email should be 40 char long",
     }),
   password: z
     .string()
@@ -35,7 +35,7 @@ const loginSchema = z.object({
       message: "invalid email type",
     })
     .max(40, {
-      message: "email should be 20 char long",
+      message: "email should be 40 char long",
     }),
   password: z
     .string()

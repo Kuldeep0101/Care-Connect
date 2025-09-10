@@ -12,8 +12,8 @@ const notificationWorker = new Worker(
   async (job) => {
     console.log(`Processing job ${job.id} with data:`, job.data);
     try {
-      const { toUserID, message, type, subject, mobileNumber } = job.data;
-      const checkToUserID = await User.findById(toUserID);
+      const { touserID, message, type, subject, mobileNumber } = job.data; //touserID can cause typo issue
+      const checkToUserID = await User.findById(touserID);
       if (!checkToUserID) {
         throw new Error("No user found for Notification");
       }

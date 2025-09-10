@@ -6,8 +6,6 @@ const {
   userLogout,
 } = require("../controllers/authControllers");
 const { signupSchema, loginSchema } = require("../schema/authSchema");
-const verifyRoute = require("../middleware/authMiddleware");
-// const { verifyRoute } = require("../middleware/authMiddleware");
 
 const authRouter = express.Router();
 

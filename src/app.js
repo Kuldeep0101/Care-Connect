@@ -7,7 +7,6 @@ const connectToDB = require("./config/database");
 app.use(express.json());
 app.use(cookieParser());
 
-
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
 
@@ -23,13 +22,13 @@ connectToDB()
 const authRouter = require("./routes/authRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
+const prescriptionRouter = require("./routes/prescriptionRoutes");
 require("./services/notificationWorker");
-
 
 app.use("/", authRouter);
 app.use("/", doctorRoutes);
-app.use('/', appointmentRouter)
-
+app.use("/", appointmentRouter);
+app.use("/", prescriptionRouter);
 
 app.use((err, req, res, next) => {
   console.error(err.stack); // Log for debugging
