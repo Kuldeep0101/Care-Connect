@@ -21,6 +21,9 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 - Appointment booking APIs for patients, ensuring double-booking prevention and robust validation.
 - Appointment management endpoints: doctors and patients can view, update, reschedule, and cancel   appointments.
 - Authentication and error handling on all booking flows for security and reliability.
+- Notification system: Async email/SMS alerts using Nodemailer, Twilio, and BullMQ queuing for appointments and other events.
+- Prescription management: Create/update/view APIs linked to appointments, with role-based auth and notifications.
+
 
 
 ---
