@@ -15,7 +15,12 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      select:false  //dont return passord in json response
+      select: false, //dont return passord in json response
+    },
+    mobileNumber: {
+      type: Number,
+      required: true,
+      unique: true,
     },
     role: {
       type: String,
@@ -67,4 +72,5 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 const User = mongoose.model("User", userSchema);
+
 module.exports = User;

@@ -1,6 +1,9 @@
 const Appointment = require("../models/appointment");
 const User = require("../models/user");
+const { enqueueNotification } = require("../services/notificationQueue");
 
+
+//Book Appointment
 const bookAppointment = async (req, res) => {
   try {
     const { doctorID, date_time, notes } = req.body;
@@ -10,6 +13,7 @@ const bookAppointment = async (req, res) => {
       });
     }
     const { id, role } = req.user;
+    const userName = await User.findById(id);
     if (role !== "patient") {
       return res.status(403).json({
         message: "Only patients are allowed to book appointments",
@@ -45,6 +49,17 @@ const bookAppointment = async (req, res) => {
     });
 
     const conformation = await appointment.save();
+
+
+    await enqueueNotification({
+      toUserID: doctor._id,
+      type: "Appointment",
+      message: `You have new Appointment of Patient: ${userName.name}, Appointment Date: ${date_time}, 
+      Notes: ${notes}`,
+      subject: "New Appointment",
+      mobileNumber: "",
+    });
+
     return res.status(200).json({
       message: "Appointment Booked Successfully!!",
       data: conformation,
@@ -57,6 +72,7 @@ const bookAppointment = async (req, res) => {
   }
 };
 
+//Get Appointments
 const getUserAppointments = async (req, res) => {
   try {
     const { id, role } = req.user;
@@ -81,12 +97,13 @@ const getUserAppointments = async (req, res) => {
   }
 };
 
+//Update appointment status
 const updateAppointmentStatus = async (req, res) => {
   try {
     const { id, role } = req.user;
     const { status, notes } = req.body;
     const appointmentID = req.params.id;
-
+    const doctor = await User.findById(id);
     if (!status) {
       return res.status(400).json({
         message: "Status is required in the request body.",
@@ -109,7 +126,17 @@ const updateAppointmentStatus = async (req, res) => {
         new: true,
       }
     );
-    console.log(updateStatus);
+
+    const patientMobileNum = await User.findById(updateStatus.patientID);
+
+    await enqueueNotification({
+      toUserID: updateStatus.patientID,
+      type: "Appointment",
+      message: `Your Appointment status has been updated to: ${status}, by ${doctor.name}, 
+      Notes: ${notes}`,
+      subject: "Appointment Update",
+      mobileNumber: patientMobileNum.mobileNumber,
+    });
 
     if (!updateStatus) {
       return res.status(404).json({

@@ -7,6 +7,7 @@ const connectToDB = require("./config/database");
 app.use(express.json());
 app.use(cookieParser());
 
+
 require("dotenv").config();
 const PORT = process.env.PORT || 9000;
 
@@ -22,6 +23,8 @@ connectToDB()
 const authRouter = require("./routes/authRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const appointmentRouter = require("./routes/appointmentRoutes");
+require("./services/notificationWorker");
+
 
 app.use("/", authRouter);
 app.use("/", doctorRoutes);
