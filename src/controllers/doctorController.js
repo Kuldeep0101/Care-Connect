@@ -1,12 +1,12 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 const getProfile = async (req, res) => {
   try {
     const toDoctorID = req.params.id;
     const docDetails = await User.findById(toDoctorID);
-    if (!docDetails || docDetails.role !== "doctor") {
+    if (!docDetails || docDetails.role !== 'doctor') {
       return res.status(404).json({
-        message: "Invalid Doctor",
+        message: 'Invalid Doctor',
       });
     } else {
       return res.status(200).json({
@@ -31,12 +31,12 @@ const updateProfile = async (req, res) => {
 
     if (!findDoc) {
       return res.status(403).json({
-        message: "No Doctors Found!!",
+        message: 'No Doctors Found!!',
       });
     }
-    if (findDoc.role !== "doctor") {
+    if (findDoc.role !== 'doctor') {
       return res.status(403).json({
-        message: "Only Doctors Allowed !!",
+        message: 'Only Doctors Allowed !!',
       });
     }
 
@@ -47,12 +47,12 @@ const updateProfile = async (req, res) => {
 
     if (!updateDetails) {
       return res.status(403).json({
-        message: "No Doctors Found!!",
+        message: 'No Doctors Found!!',
       });
     }
 
     return res.status(200).json({
-      message: "Profile Updated",
+      message: 'Profile Updated',
       data: updateDetails,
     });
   } catch (error) {
@@ -67,7 +67,7 @@ const updateProfile = async (req, res) => {
 const searchProfile = async (req, res) => {
   try {
     const { speciality, experience, location, timing } = req.query;
-    const query = { role: "doctor" };
+    const query = { role: 'doctor' };
     if (speciality) {
       query.speciality = speciality;
     }
@@ -85,11 +85,11 @@ const searchProfile = async (req, res) => {
     const findDoctorbyDetails = await User.find(query);
     if (findDoctorbyDetails.length === 0) {
       return res.status(404).json({
-        message: "No doctors found to your query!!",
+        message: 'No doctors found to your query!!',
       });
     } else {
       return res.status(200).json({
-        message: "Doctor found to your query",
+        message: 'Doctor found to your query',
         data: findDoctorbyDetails,
       });
     }

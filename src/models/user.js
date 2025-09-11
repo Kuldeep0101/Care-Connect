@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["doctor", "patient"],
+      enum: ['doctor', 'patient'],
       required: true,
     },
 
@@ -33,33 +33,33 @@ const userSchema = new mongoose.Schema(
     speciality: {
       type: String,
       required: function () {
-        return this.role === "doctor";
+        return this.role === 'doctor';
       },
     },
     experience: {
       type: String,
       required: function () {
-        return this.role === "doctor";
+        return this.role === 'doctor';
       },
     },
     location: {
       type: String,
       required: function () {
-        return this.role === "doctor";
+        return this.role === 'doctor';
       },
     },
     timing: {
       type: [String],
       required: function () {
-        return this.role === "doctor";
+        return this.role === 'doctor';
       },
     },
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
     return next();
   } else {
     this.password = await bcrypt.hash(this.password, 12);
@@ -68,9 +68,9 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(userPassword, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

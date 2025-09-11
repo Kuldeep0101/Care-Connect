@@ -1,30 +1,25 @@
-const { Worker, delay } = require("bullmq");
-const redisConfig = require("../config/redisConfig");
-const User = require("../models/user");
-const sendEmailNotification = require("./sendEmailNotificationj");
-const sendSmsNotification = require("./sendSmsnotification");
-
+const { Worker } = require('bullmq');
+const redisConfig = require('../config/redisConfig');
+const User = require('../models/user');
+const sendEmailNotification = require('./sendEmailNotificationj');
+const sendSmsNotification = require('./sendSmsnotification');
 
 //new Worker instance that listens to the 'notifications' queue
 
 const notificationWorker = new Worker(
-  "notifications",
+  'notifications',
   async (job) => {
     console.log(`Processing job ${job.id} with data:`, job.data);
     try {
       const { touserID, message, type, subject, mobileNumber } = job.data; //touserID can cause typo issue
       const checkToUserID = await User.findById(touserID);
       if (!checkToUserID) {
-        throw new Error("No user found for Notification");
+        throw new Error('No user found for Notification');
       }
 
       //nodemailer and twilio logic below
 
-      await sendEmailNotification(
-        checkToUserID.email,
-        subject,
-        message,
-      );
+      await sendEmailNotification(checkToUserID.email, subject, message);
 
       await sendSmsNotification(mobileNumber, message);
       console.log(
@@ -40,7 +35,7 @@ const notificationWorker = new Worker(
     concurrency: 5, //number of processes to run simultaneously
     attempts: 3, //maximum retry attempts if a job fails
     backoff: {
-      type: "exponential",
+      type: 'exponential',
       delay: 1000, //Start with 1 second delay for the first retry
     },
   }

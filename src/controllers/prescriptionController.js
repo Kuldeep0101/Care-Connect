@@ -1,22 +1,14 @@
-const Appointment = require("../models/appointment");
-const Prescription = require("../models/prescription");
-const {
-  enqueueNotification
-} = require("../services/notificationQueue");
+const Appointment = require('../models/appointment');
+const Prescription = require('../models/prescription');
+const { enqueueNotification } = require('../services/notificationQueue');
 //Create Prescription
 const createPrescription = async (req, res) => {
   try {
-    const {
-      prescription,
-      appointmentId
-    } = req.body;
-    const {
-      id,
-      role
-    } = req.user;
-    if (role !== "doctor") {
+    const { prescription, appointmentId } = req.body;
+    const { id, role } = req.user;
+    if (role !== 'doctor') {
       return res.status(403).json({
-        message: "Only Doctors can create Prescription!!",
+        message: 'Only Doctors can create Prescription!!',
       });
     }
 
@@ -24,7 +16,7 @@ const createPrescription = async (req, res) => {
 
     if (!appointmentDetails || appointmentDetails.doctorID.toString() !== id) {
       return res.status(404).json({
-        message: "Invalid Appointment",
+        message: 'Invalid Appointment',
       });
     }
 
@@ -38,18 +30,18 @@ const createPrescription = async (req, res) => {
     const savePrescription = await newPrescription.save();
     await enqueueNotification({
       touserID: appointmentDetails.patientID,
-      type: "Prescription",
+      type: 'Prescription',
       message: `New Prescription Added to your Appointment:${appointmentDetails.date_time}`,
-      subject: "New Prescription",
-      mobileNumber: "",
+      subject: 'New Prescription',
+      mobileNumber: '',
     });
 
     return res.status(200).json({
-      message: "Prescription Added",
+      message: 'Prescription Added',
       data: savePrescription,
     });
   } catch (error) {
-    console.log("Error while creating Prescription ", error);
+    console.log('Error while creating Prescription ', error);
     res.status(500).json({
       message: error.message,
     });
@@ -59,21 +51,18 @@ const createPrescription = async (req, res) => {
 //GET Priscriptions
 const getPrescription = async (req, res) => {
   try {
-    const {
-      id,
-      role
-    } = req.user;
+    const { id, role } = req.user;
 
     let prescriptions;
 
-    if (role === "patient") {
+    if (role === 'patient') {
       prescriptions = await Prescription.find({
-        patientId: id
-      }).populate("appointmentId")
-    } else if (role === "doctor") {
+        patientId: id,
+      }).populate('appointmentId');
+    } else if (role === 'doctor') {
       prescriptions = await Prescription.find({
-        doctorId: id
-      }).populate("appointmentId")
+        doctorId: id,
+      }).populate('appointmentId');
     }
 
     // const findPrescriptions = await Prescription.find({
@@ -86,15 +75,15 @@ const getPrescription = async (req, res) => {
 
     if (!prescriptions || !prescriptions.length) {
       return res.status(404).json({
-        message: "No Prescriptions Found",
+        message: 'No Prescriptions Found',
       });
     }
     return res.status(200).json({
-      message: "All Prescriptions",
+      message: 'All Prescriptions',
       data: prescriptions,
     });
   } catch (error) {
-    console.log("Error while creating Prescription ", error);
+    console.log('Error while creating Prescription ', error);
     res.status(500).json({
       message: error.message,
     });
@@ -105,14 +94,12 @@ const getPrescription = async (req, res) => {
 
 const updatePrescription = async (req, res) => {
   try {
-    const {
-      updatedPrescription
-    } = req.body;
+    const { updatedPrescription } = req.body;
     const prescriptionId = req.params.id;
 
-    if (req.user.role !== "doctor") {
+    if (req.user.role !== 'doctor') {
       return res.status(403).json({
-        message: "Doctors only"
+        message: 'Doctors only',
       });
     }
 
@@ -122,11 +109,9 @@ const updatePrescription = async (req, res) => {
       !findPrescription ||
       findPrescription.doctorId.toString() !== req.user.id
     ) {
-      return res
-        .status(404)
-        .json({
-          message: "Prescription not found or unauthorized"
-        });
+      return res.status(404).json({
+        message: 'Prescription not found or unauthorized',
+      });
     }
 
     findPrescription.details = updatedPrescription || findPrescription.details;
@@ -134,18 +119,18 @@ const updatePrescription = async (req, res) => {
 
     await enqueueNotification({
       touserID: findPrescription.patientId,
-      type: "Prescription",
+      type: 'Prescription',
       message: `Your Prescription has Been Updated`,
-      subject: "Prescription Update!!",
-      mobileNumber: "",
+      subject: 'Prescription Update!!',
+      mobileNumber: '',
     });
 
     return res.status(200).json({
-      message: "Prescription Updated",
+      message: 'Prescription Updated',
       data: findPrescription,
     });
   } catch (error) {
-    console.log("Error while creating Prescription ", error);
+    console.log('Error while creating Prescription ', error);
     res.status(500).json({
       message: error.message,
     });

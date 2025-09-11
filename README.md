@@ -8,32 +8,30 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 
 ## Features Implemented So Far ✅
 
-- Node.js project setup with layered architecture and environment configuration ⚙️  
-- MongoDB Atlas connection using Mongoose 🗄️  
-- User model supporting both patients and doctors with role differentiation 👥  
-- Password hashing with bcrypt and secure password comparison methods 🔐  
-- Doctor-specific fields included (specialty, location, ratings, experience, timing) 📋 
-- Authentication endpoints: Secure register (signup) with duplicate checks, login with JWT token in   cookies, and logout to clear sessions 🔑   
+- Node.js project setup with layered architecture and environment configuration ⚙️
+- MongoDB Atlas connection using Mongoose 🗄️
+- User model supporting both patients and doctors with role differentiation 👥
+- Password hashing with bcrypt and secure password comparison methods 🔐
+- Doctor-specific fields included (specialty, location, ratings, experience, timing) 📋
+- Authentication endpoints: Secure register (signup) with duplicate checks, login with JWT token in cookies, and logout to clear sessions 🔑
 - Basic groundwork laid for authentication workflows 🔧
 - Doctor profile endpoints: Doctors can view and update their own profiles securely.
 - Doctor search endpoint: Patients can search doctors by specialty/location using query parameters.
 - Profile routes protected by JWT authentication, with proper role validation.
 - Appointment booking APIs for patients, ensuring double-booking prevention and robust validation.
-- Appointment management endpoints: doctors and patients can view, update, reschedule, and cancel   appointments.
+- Appointment management endpoints: doctors and patients can view, update, reschedule, and cancel appointments.
 - Authentication and error handling on all booking flows for security and reliability.
 - Notification system: Async email/SMS alerts using Nodemailer, Twilio, and BullMQ queuing for appointments and other events.
 - Prescription management: Create/update/view APIs linked to appointments, with role-based auth and notifications.
-
-
 
 ---
 
 ## Tech Stack 💻
 
-- Node.js ⚡  
-- Express.js 🚀  
-- MongoDB Atlas with Mongoose 🐘  
-- bcrypt for password hashing 🔑  
+- Node.js ⚡
+- Express.js 🚀
+- MongoDB Atlas with Mongoose 🐘
+- bcrypt for password hashing 🔑
 - dotenv for environment variables 🌿
 
 ---
@@ -42,35 +40,31 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 
 ### Prerequisites 🎯
 
-- Node.js (v16 or higher recommended)  
-- MongoDB instance (local or cloud like MongoDB Atlas)  
+- Node.js (v16 or higher recommended)
+- MongoDB instance (local or cloud like MongoDB Atlas)
 - npm or yarn package manager
 
 ### Installation 🛠️
 
-1. Clone the repository  
+1. Clone the repository
 
 - git clone https://github.com/Kuldeep0101/Care-Connect.git
 - cd Care-Connect
 
-
-
-2. Install dependencies  
+2. Install dependencies
 
 - npm install
 
-3. Create a `.env` file in the root directory with the following variables:  
+3. Create a `.env` file in the root directory with the following variables:
 
 - MONGODB_URI=
 - PORT=8000
 
+4. Start the server
 
-4. Start the server  
+- npm run dev
 
- - npm run dev
-
-
-*(Assuming nodemon is configured for development)*
+_(Assuming nodemon is configured for development)_
 
 ---
 
@@ -85,7 +79,6 @@ DoctorHub is a backend API for an online doctor appointment booking platform. It
 - /middlewares # Auth, error handling, validation
 - /app.js # Entry point
 - .env # Environment variables (gitignored)
-
 
 ---
 

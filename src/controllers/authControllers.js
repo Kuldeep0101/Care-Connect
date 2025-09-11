@@ -1,15 +1,15 @@
-const User = require("../models/user");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const User = require('../models/user');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-require("dotenv").config();
+require('dotenv').config();
 const SecretKey = process.env.SecretKey;
 
 const signupController = async (req, res) => {
   try {
     const { name, email, password, role, ...extraFields } = req.body;
 
-    if (role === "patient" && Object.keys(extraFields).length > 0) {
+    if (role === 'patient' && Object.keys(extraFields).length > 0) {
       return res
         .status(400)
         .json({ message: "Patient can't have Doctors details" });
@@ -18,7 +18,7 @@ const signupController = async (req, res) => {
     const isDuplicateEmail = await User.findOne({ email });
     if (isDuplicateEmail) {
       return res.status(409).json({
-        message: "Duplicate Email-ID are not ALLOWED!!",
+        message: 'Duplicate Email-ID are not ALLOWED!!',
       });
     }
     const newUser = new User({
@@ -43,25 +43,25 @@ const signupController = async (req, res) => {
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const findUser = await User.findOne({ email }).select("+password");
+    const findUser = await User.findOne({ email }).select('+password');
     if (!findUser) {
       return res.status(404).json({
-        message: "No user found with the emailID",
+        message: 'No user found with the emailID',
       });
     }
     const comparePassword = await bcrypt.compare(password, findUser.password);
     if (!comparePassword) {
       return res.status(401).json({
-        message: "Password did not match, please try again",
+        message: 'Password did not match, please try again',
       });
     }
 
     const payload = { id: findUser._id.toString(), role: findUser.role };
 
     const generateJWT = await jwt.sign(payload, SecretKey, {
-      expiresIn: "2d",
+      expiresIn: '2d',
     });
-    res.cookie("jwtToken", generateJWT, {
+    res.cookie('jwtToken', generateJWT, {
       maxAge: 48 * 60 * 60 * 1000, //expire in 48 hour
     });
     return res.status(200).json({
@@ -78,12 +78,12 @@ const userLogout = async (req, res) => {
     const jwtCookie = req.cookies.jwtToken;
     if (!jwtCookie) {
       return res.status(404).json({
-        message: "No logged-in user found",
+        message: 'No logged-in user found',
       });
     }
 
-    res.clearCookie("jwtToken");
-    return res.status(200).json({ message: "Logged out Successfully" });
+    res.clearCookie('jwtToken');
+    return res.status(200).json({ message: 'Logged out Successfully' });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ message: error.message });

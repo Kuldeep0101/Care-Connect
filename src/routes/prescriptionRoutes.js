@@ -1,33 +1,33 @@
-const express = require("express");
-const validate = require("../middleware/validate");
-const verifyRoute = require("../middleware/authMiddleware");
+const express = require('express');
+const validate = require('../middleware/validate');
+const verifyRoute = require('../middleware/authMiddleware');
 
 const {
   prescriptionSchema,
   updatePrescriptionSchema,
-} = require("../schema/prescriptionSchema");
+} = require('../schema/prescriptionSchema');
 const {
   createPrescription,
   getPrescription,
   updatePrescription,
-} = require("../controllers/prescriptionController");
+} = require('../controllers/prescriptionController');
 
 const prescriptionRouter = express.Router();
 
 //Create new Prescriptons
 prescriptionRouter.post(
-  "/prescriptions",
+  '/prescriptions',
   validate(prescriptionSchema),
   verifyRoute,
   createPrescription
 );
 
 // See all the prescriptions
-prescriptionRouter.get("/prescriptions", verifyRoute, getPrescription);
+prescriptionRouter.get('/prescriptions', verifyRoute, getPrescription);
 
 //Update the Prescriptions
 prescriptionRouter.patch(
-  "/prescriptions/:id",
+  '/prescriptions/:id',
   validate(updatePrescriptionSchema),
   verifyRoute,
   updatePrescription

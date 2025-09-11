@@ -1,6 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const User = require("../models/appointment");
-const Notification = require("../models/notification");
+const User = require('../models/appointment');
+const Notification = require('../models/notification');
 
 const sendNotifications = async (req, res) => {
   try {
@@ -11,7 +10,7 @@ const sendNotifications = async (req, res) => {
     console.log(isValidToUserID);
     if (!isValidToUserID) {
       return res.status(404).json({
-        message: "User not found !!",
+        message: 'User not found !!',
       });
     }
 
@@ -27,7 +26,7 @@ const sendNotifications = async (req, res) => {
     //Send the notification externally
 
     return res.status(200).json({
-      message: "notification sent!!",
+      message: 'notification sent!!',
       data: {
         id: notification._id,
         message: notification.message,
